@@ -16,7 +16,6 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   //navigation to detail page
-
   void navigationToFoodDetails(int index) {
     final shop = context.read<Shop>();
     final foodMenu = shop.foodMenu;
@@ -28,6 +27,8 @@ class _MenuPageState extends State<MenuPage> {
       ),
     );
   }
+
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -130,45 +131,54 @@ class _MenuPageState extends State<MenuPage> {
         ),
         Container(
           decoration: BoxDecoration(
-              color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(20),
+          ),
           margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
           padding: const EdgeInsets.all(20),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(
-              children: [
-                Image.asset(
-                  'asset/sushi.png',
-                  height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    'asset/sushi.png',
+                    height: 60,
+                  ),
+                  const SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Salmon eggs',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '\$2000',
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    isFavorite = !isFavorite;
+                  });
+                },
+                icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: isFavorite ? Colors.red : Colors.grey,
+                  size: 28,
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Salmon eggs',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      '\$2000',
-                      style: TextStyle(color: Colors.grey[700]),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            const Icon(
-              Icons.favorite_outline,
-              color: Colors.grey,
-              size: 28,
-            )
-          ]),
-        )
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+              ),
+            ],
+          ),
+        ),
       ]),
     );
   }
