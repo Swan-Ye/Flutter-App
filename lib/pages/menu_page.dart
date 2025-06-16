@@ -3,7 +3,9 @@ import 'package:myapp/components/button.dart';
 import 'package:myapp/model/food.dart';
 import 'package:myapp/themes/color.dart';
 import 'package:myapp/components/food_tile.dart';
+import 'package:provider/provider.dart';
 
+import '../model/shop.dart';
 import 'food_detail_page.dart';
 
 class MenuPage extends StatefulWidget {
@@ -14,28 +16,12 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  // Foode Menu //
-  List foodMenu = [
-    Food(
-        name: 'Tuna Sushi',
-        price: '4500MMK',
-        imagePath: 'asset/tuna.png',
-        rating: '4.5'),
-    Food(
-        name: 'Salmon Sashimi',
-        price: '5000MMK',
-        imagePath: 'asset/sushi.png',
-        rating: '4.9'),
-    Food(
-        name: 'Seaweed Sushi',
-        price: '3500MMK',
-        imagePath: 'asset/sushi1.png',
-        rating: '4.1')
-  ];
-
   //navigation to detail page
 
   void navigationToFoodDetails(int index) {
+    final shop = context.read<Shop>();
+    final foodMenu = shop.foodMenu;
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -46,19 +32,28 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    final shop = context.read<Shop>();
+    final foodMenu = shop.foodMenu;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey[800],
         elevation: 0,
-        leading: Icon(
+        leading: const Icon(
           Icons.menu,
-          color: Colors.grey[500],
         ),
-        title: Text(
+        title: const Text(
           'Tokyo',
-          style: TextStyle(color: Colors.grey[900]),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/cartpage');
+            },
+            icon: const Icon(Icons.shopping_cart),
+          ),
+        ],
       ),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
