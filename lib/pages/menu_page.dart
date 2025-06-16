@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/components/button.dart';
-import 'package:myapp/model/food.dart';
 import 'package:myapp/themes/color.dart';
 import 'package:myapp/components/food_tile.dart';
 import 'package:provider/provider.dart';
